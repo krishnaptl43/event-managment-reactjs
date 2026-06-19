@@ -1,7 +1,33 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import { axiosClient } from '../services/apiClient';
+import { Urls } from '../services/urls';
+import { toast } from 'react-toastify';
 
 export default function Events() {
+
+    const [events, setEvents] = useState([]);
+
+    const fetchEvents = useCallback(async () => {
+        try {
+            let { data } = await axiosClient.get(Urls.events);
+            if (data.status) {
+                setEvents(data.data)
+            } else {
+                toast.success(data.message);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }, [])
+
+    useEffect(() => {
+        fetchEvents()
+    }, [fetchEvents]);
+
+    console.log(events);
+
+
     return (
         <>
             {/* ================= HERO ================= */}
@@ -153,112 +179,46 @@ export default function Events() {
                     </div>
                     <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
                         {/* Card */}
-                        <div className="event-card glass rounded-3xl overflow-hidden">
-                            <div className="relative overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=1200&auto=format&fit=crop"
-                                    className="w-full h-64 object-cover hover:scale-110 transition duration-700"
-                                    alt=""
-                                />
-                                <div className="absolute top-5 left-5 bg-purple-500 px-4 py-2 rounded-full text-xs font-bold">
-                                    Upcoming
-                                </div>
-                            </div>
-                            <div className="p-7">
-                                <div className="flex items-center justify-between mb-5">
-                                    <span className="text-gray-400 text-sm">
-                                        <i className="fa-solid fa-calendar mr-2 text-purple-400" />
-                                        28 May 2026
-                                    </span>
-                                    <span className="text-purple-400 text-sm">Tech</span>
-                                </div>
-                                <h3 className="text-2xl font-bold mb-4">
-                                    AI &amp; Tech Conference
-                                </h3>
-                                <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                                    Learn AI, machine learning, automation, and future technologies.
-                                </p>
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-gray-500 text-xs">Ticket Price</p>
-                                        <h4 className="text-2xl font-black text-purple-400">₹1499</h4>
+                        {events && events.map(item => (
+                            <div className="event-card glass rounded-3xl overflow-hidden" key={item._id}>
+                                <div className="relative overflow-hidden">
+                                    <img
+                                        src={item.thumbnail}
+                                        className="w-full h-64 object-cover hover:scale-110 transition duration-700"
+                                        alt={item.title}
+                                    />
+                                    <div className="absolute top-5 left-5 bg-purple-500 px-4 py-2 rounded-full text-xs font-bold">
+                                        Upcoming
                                     </div>
-                                    <Link to="/events/details" className="bg-purple-500 hover:bg-purple-400 transition px-5 py-3 rounded-xl font-semibold">
-                                        Book Now
-                                    </Link>
                                 </div>
-                            </div>
-                        </div>
-                        {/* Card */}
-                        <div className="event-card glass rounded-3xl overflow-hidden">
-                            <div className="relative overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?q=80&w=1200&auto=format&fit=crop"
-                                    className="w-full h-64 object-cover hover:scale-110 transition duration-700"
-                                    alt=""
-                                />
-                                <div className="absolute top-5 left-5 bg-pink-500 px-4 py-2 rounded-full text-xs font-bold">
-                                    Music
-                                </div>
-                            </div>
-                            <div className="p-7">
-                                <div className="flex items-center justify-between mb-5">
-                                    <span className="text-gray-400 text-sm">
-                                        <i className="fa-solid fa-location-dot mr-2 text-pink-400" />
-                                        Goa
-                                    </span>
-                                    <span className="text-pink-400 text-sm">Festival</span>
-                                </div>
-                                <h3 className="text-2xl font-bold mb-4">Summer Music Festival</h3>
-                                <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                                    Experience beach vibes, EDM nights, and live performances.
-                                </p>
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-gray-500 text-xs">Ticket Price</p>
-                                        <h4 className="text-2xl font-black text-pink-400">₹1999</h4>
+                                <div className="p-7">
+                                    <div className="flex items-center justify-between mb-5">
+                                        <span className="text-gray-400 text-sm">
+                                            <i className="fa-solid fa-calendar mr-2 text-purple-400" />
+                                            {item.venue}
+                                        </span>
+                                        <span className="text-purple-400 text-sm">{item.category}</span>
                                     </div>
-                                    <button className="bg-pink-500 hover:bg-pink-400 transition px-5 py-3 rounded-xl font-semibold">
-                                        Book Now
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        {/* Card */}
-                        <div className="event-card glass rounded-3xl overflow-hidden">
-                            <div className="relative overflow-hidden">
-                                <img
-                                    src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1200&auto=format&fit=crop"
-                                    className="w-full h-64 object-cover hover:scale-110 transition duration-700"
-                                    alt=""
-                                />
-                                <div className="absolute top-5 left-5 bg-green-500 px-4 py-2 rounded-full text-xs font-bold">
-                                    Live
-                                </div>
-                            </div>
-                            <div className="p-7">
-                                <div className="flex items-center justify-between mb-5">
-                                    <span className="text-gray-400 text-sm">
-                                        <i className="fa-solid fa-location-dot mr-2 text-green-400" />
-                                        Mumbai
-                                    </span>
-                                    <span className="text-green-400 text-sm">Gaming</span>
-                                </div>
-                                <h3 className="text-2xl font-bold mb-4">Gaming Championship</h3>
-                                <p className="text-gray-400 text-sm leading-relaxed mb-6">
-                                    Compete with professional gamers in esports tournaments.
-                                </p>
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="text-gray-500 text-xs">Ticket Price</p>
-                                        <h4 className="text-2xl font-black text-green-400">₹799</h4>
+                                    <h3 className="text-2xl font-bold mb-4">
+                                        {item.title}
+                                    </h3>
+                                    <p className="text-gray-400 text-sm leading-relaxed mb-6">
+                                        {item.desc}
+                                    </p>
+                                    <div className="flex items-center justify-between">
+                                        <div>
+                                            <p className="text-gray-500 text-xs">General Ticket Price</p>
+                                            <h4 className="text-2xl font-black text-purple-400">₹{item.general_tickets_price}</h4>
+                                            <p className="text-gray-500 text-xs">Premium Ticket Price</p>
+                                            <h4 className="text-2xl font-black text-purple-400">₹{item.premium_tickets_price}</h4>
+                                        </div>
+                                        <Link to="/events/details" className="bg-purple-500 hover:bg-purple-400 transition px-5 py-3 rounded-xl font-semibold">
+                                            More Details
+                                        </Link>
                                     </div>
-                                    <button className="bg-green-500 hover:bg-green-400 transition px-5 py-3 rounded-xl font-semibold">
-                                        Join Live
-                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
