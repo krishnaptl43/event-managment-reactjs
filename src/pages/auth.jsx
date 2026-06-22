@@ -1,8 +1,20 @@
-import React, { useState } from 'react'
-import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaUser } from 'react-icons/fa';
+import React, { useCallback, useState } from 'react'
+import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaSpinner, FaUser } from 'react-icons/fa';
+import { useForm } from 'react-hook-form';
+import { useAuth } from "../hooks/useAuth"
+import { addUser, loginUser } from '../services/userApis';
+import { useNavigate, Navigate } from 'react-router';
+import { useAuthContext } from '../context/authContext';
 
 export default function Auth() {
     const [loginPage, setLoginPage] = useState(true);
+
+    const { isAuthenticated } = useAuth();
+
+    if (isAuthenticated) {
+        return <Navigate to="/user" />;
+    }
+
     return (
         <>
             {/* login section */}
@@ -93,9 +105,32 @@ export default function Auth() {
     )
 }
 
-
 function Login() {
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoding] = useState(false);
+    const { setData } = useAuthContext()
+    const navigate = useNavigate();
+
+    const { register, reset, formState: { errors }, handleSubmit } = useForm();
+
+    const userLogin = useCallback(async (data) => {
+        setIsLoding(true);
+        try {
+            let user = await loginUser(data);
+            if (user) {
+                localStorage.setItem("token", user.data.accessToken);
+                setData({ auth: true, user });
+                navigate(-1)
+                reset();
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoding(false);
+        }
+
+    }, [])
+
     return (
         <>
             <div className="max-w-md mx-auto">
@@ -106,7 +141,7 @@ function Login() {
                     </p>
                 </div>
                 {/* Form */}
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit(userLogin)}>
                     {/* Email */}
 
                     <div>
@@ -121,7 +156,9 @@ function Login() {
                                 type="email"
                                 placeholder="admin@example.com"
                                 className="w-full bg-slate-900 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white outline-none focus:border-cyan-500 transition"
+                                {...register("email", { required: true })}
                             />
+                            {errors.email && <p className='text-red-500'>Email is required</p>}
                         </div>
                     </div>
 
@@ -139,6 +176,7 @@ function Login() {
                                 type={showPassword ? "text" : "password"}
                                 placeholder="••••••••"
                                 className="w-full bg-slate-900 border border-white/10 rounded-xl py-4 pl-12 pr-12 text-white outline-none focus:border-cyan-500 transition"
+                                {...register("password", { required: true })}
                             />
 
                             <button
@@ -155,6 +193,7 @@ function Login() {
                                 )}
                             </button>
                         </div>
+                        {errors.password && <p className='text-red-500'>password is required</p>}
                     </div>
                     {/* Options */}
                     <div className="flex items-center justify-between text-sm">
@@ -167,8 +206,22 @@ function Login() {
                         </a>
                     </div>
                     {/* Login Button */}
-                    <button className="w-full h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-400 transition font-bold text-lg shadow-xl shadow-cyan-500/30">
-                        Login
+                    <button
+                        disabled={isLoading}
+                        className={`w-full h-14 rounded-2xl font-bold text-lg transition flex items-center justify-center gap-3
+                         ${isLoading
+                                ? "bg-cyan-400 cursor-not-allowed"
+                                : "bg-cyan-500 hover:bg-cyan-400 shadow-xl shadow-cyan-500/30"
+                            }`}
+                    >
+                        {isLoading ? (
+                            <>
+                                <FaSpinner className="animate-spin text-xl" />
+                                Processing...
+                            </>
+                        ) : (
+                            "Login"
+                        )}
                     </button>
                 </form>
                 {/* Divider */}
@@ -195,6 +248,26 @@ function Login() {
 
 function Register() {
     const [showPassword, setShowPassword] = useState(false);
+    const [isLoading, setIsLoding] = useState(false);
+
+    const { register, reset, formState: { errors }, handleSubmit } = useForm();
+
+    const userRegister = useCallback(async (data) => {
+        setIsLoding(true);
+        try {
+            let user = await addUser(data);
+            if (user) {
+                reset();
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setIsLoding(false);
+        }
+
+    }, [])
+
+
     return (
         <>
             <div className="max-w-md mx-auto">
@@ -205,7 +278,7 @@ function Register() {
                     </p>
                 </div>
                 {/* Form */}
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit(userRegister)}>
                     {/* username */}
                     <div>
                         <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -219,7 +292,9 @@ function Register() {
                                 type="text"
                                 placeholder="Enter full name"
                                 className="w-full bg-slate-900 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white outline-none focus:border-cyan-500 transition"
+                                {...register("name", { required: true, minLength: 2, maxLength: 32 })}
                             />
+                            {errors.name && <p className='text-red-500'>user name is required</p>}
                         </div>
                     </div>
                     {/* Email */}
@@ -236,7 +311,9 @@ function Register() {
                                 type="email"
                                 placeholder="admin@example.com"
                                 className="w-full bg-slate-900 border border-white/10 rounded-xl py-4 pl-12 pr-4 text-white outline-none focus:border-cyan-500 transition"
+                                {...register("email", { required: true })}
                             />
+                            {errors.email && <p className='text-red-500'>user email is required</p>}
                         </div>
                     </div>
 
@@ -254,6 +331,7 @@ function Register() {
                                 type={showPassword ? "text" : "password"}
                                 placeholder="••••••••"
                                 className="w-full bg-slate-900 border border-white/10 rounded-xl py-4 pl-12 pr-12 text-white outline-none focus:border-cyan-500 transition"
+                                {...register("password", { required: true })}
                             />
 
                             <button
@@ -270,10 +348,26 @@ function Register() {
                                 )}
                             </button>
                         </div>
+                        {errors.password && <p className='text-red-500'>password is required</p>}
                     </div>
                     {/* register Button */}
-                    <button className="w-full h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-400 transition font-bold text-lg shadow-xl shadow-cyan-500/30">
-                        Register Here...
+
+                    <button
+                        disabled={isLoading}
+                        className={`w-full h-14 rounded-2xl font-bold text-lg transition flex items-center justify-center gap-3
+                         ${isLoading
+                                ? "bg-cyan-400 cursor-not-allowed"
+                                : "bg-cyan-500 hover:bg-cyan-400 shadow-xl shadow-cyan-500/30"
+                            }`}
+                    >
+                        {isLoading ? (
+                            <>
+                                <FaSpinner className="animate-spin text-xl" />
+                                Processing...
+                            </>
+                        ) : (
+                            "Register Here..."
+                        )}
                     </button>
                 </form>
                 {/* Divider */}

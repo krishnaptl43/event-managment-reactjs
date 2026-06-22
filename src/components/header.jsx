@@ -1,7 +1,10 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router'
+import { useAuthContext } from '../context/authContext'
 
 export default function Header() {
+    const { data, setData } = useAuthContext();
+
     return (
         <>
             {/* Navbar */}
@@ -27,10 +30,16 @@ export default function Header() {
                     </nav>
 
                     <div className="flex items-center gap-3">
-                        <Link to="/auth"
-                            className="bg-cyan-500 hover:bg-cyan-400 transition px-7 py-1 rounded-xl font-semibold shadow-lg shadow-cyan-500/30">
-                            Login
-                        </Link>
+                        {data?.auth ?
+                            <img
+                                src={data.user.image ?? "https://i.pravatar.cc/150?img=32"}
+                                alt=""
+                                className="w-12 h-12 rounded-full"
+                            /> :
+                            <Link to="/auth"
+                                className="bg-cyan-500 hover:bg-cyan-400 transition px-7 py-1 rounded-xl font-semibold shadow-lg shadow-cyan-500/30">
+                                Login
+                            </Link>}
                     </div>
                 </div>
             </header>

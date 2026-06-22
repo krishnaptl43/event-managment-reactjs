@@ -1,0 +1,27 @@
+import { toast } from "react-toastify";
+import { axiosClient } from "./apiClient";
+import { Urls } from "./urls";
+
+export async function addUser(formData) {
+    try {
+        let { data } = await axiosClient.post(Urls.users, formData);
+        if (data.status) {
+            toast.success(data.message);
+            return data;
+        }
+    } catch (error) {
+        toast.error(error.response.data.message || error.message)
+    }
+}
+
+export async function loginUser(formData) {
+    try {
+        let { data } = await axiosClient.post(Urls.login, formData);
+        if (data.status) {
+            toast.success(data.message);
+            return data;
+        }
+    } catch (error) {
+        toast.error(error.response.data.message || error.message)
+    }
+}

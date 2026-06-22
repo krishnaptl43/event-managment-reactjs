@@ -1,19 +1,20 @@
 import React from 'react'
 import { Navigate, Outlet, useLocation } from 'react-router'
 import DashboardLayout from '../pages/dashboard/index';
+import { useAuth } from "../hooks/useAuth";
 
 export default function ProtectedRoute() {
-    const isLogin = true;
+    const { isAuthenticated } = useAuth();
     const { pathname } = useLocation();
 
 
-    if (pathname === "/user" && isLogin) {
+    if (pathname === "/user" && isAuthenticated) {
         return <Navigate to="/user/dashboard" />
     }
 
     return (
         <>
-            {isLogin ?
+            {isAuthenticated ?
                 <DashboardLayout>
                     <Outlet />
                 </DashboardLayout>
