@@ -14,7 +14,7 @@ export default function DashStarics() {
                     <p className="text-slate-400">Booked Tickets</p>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                {/* <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
                     <FaCalendarAlt className="text-purple-400 text-3xl mb-5" />
                     <h3 className="text-4xl font-black mb-2">5</h3>
                     <p className="text-slate-400">Upcoming Events</p>
@@ -24,7 +24,7 @@ export default function DashStarics() {
                     <FaHeart className="text-pink-400 text-3xl mb-5" />
                     <h3 className="text-4xl font-black mb-2">18</h3>
                     <p className="text-slate-400">Saved Events</p>
-                </div>
+                </div> */}
 
                 <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
                     <FaChartLine className="text-green-400 text-3xl mb-5" />

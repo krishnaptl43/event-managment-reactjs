@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaCalendarDays, FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa6'
 
 export default function Footer() {
     return (
@@ -16,7 +17,7 @@ export default function Footer() {
                             <div className="flex items-center gap-3 mb-5">
 
                                 <div className="w-11 h-11 rounded-2xl bg-cyan-500 flex items-center justify-center">
-                                    <i className="fa-solid fa-calendar-days text-white"></i>
+                                    <FaCalendarDays className="text-white" />
                                 </div>
 
                                 <h2 className="text-2xl font-black text-white">
@@ -102,28 +103,28 @@ export default function Footer() {
                                 <a href="#"
                                     className="w-12 h-12 rounded-xl glass flex items-center justify-center hover:bg-cyan-500 transition">
 
-                                    <i className="fa-brands fa-facebook-f"></i>
+                                    <FaFacebookF />
 
                                 </a>
 
                                 <a href="#"
                                     className="w-12 h-12 rounded-xl glass flex items-center justify-center hover:bg-pink-500 transition">
 
-                                    <i className="fa-brands fa-instagram"></i>
+                                    <FaInstagram />
 
                                 </a>
 
                                 <a href="#"
                                     className="w-12 h-12 rounded-xl glass flex items-center justify-center hover:bg-sky-500 transition">
 
-                                    <i className="fa-brands fa-twitter"></i>
+                                    <FaTwitter />
 
                                 </a>
 
                                 <a href="#"
                                     className="w-12 h-12 rounded-xl glass flex items-center justify-center hover:bg-purple-500 transition">
 
-                                    <i className="fa-brands fa-linkedin-in"></i>
+                                    <FaLinkedinIn />
 
                                 </a>
 

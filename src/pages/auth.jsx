@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { FaEnvelope, FaEye, FaEyeSlash, FaLock, FaSpinner, FaUser } from 'react-icons/fa';
+import { FaCalendarDays, FaFacebookF, FaGoogle, FaMusic, FaTicket, FaUsers } from 'react-icons/fa6';
 import { useForm } from 'react-hook-form';
 import { useAuth } from "../hooks/useAuth"
 import { addUser, loginUser } from '../services/userApis';
@@ -30,7 +31,7 @@ export default function Auth() {
                         <div className="relative z-10">
                             <div className="flex items-center gap-4 mb-8">
                                 <div className="w-14 h-14 rounded-2xl bg-cyan-500 flex items-center justify-center shadow-lg shadow-cyan-500/30">
-                                    <i className="fa-solid fa-calendar-days text-white text-xl" />
+                                    <FaCalendarDays className="text-white text-xl" />
                                 </div>
                                 <h1 className="text-4xl font-black">
                                     Event<span className="text-cyan-400">Hub</span>
@@ -48,7 +49,7 @@ export default function Auth() {
                             <div className="space-y-5">
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-cyan-500/20 flex items-center justify-center text-cyan-400">
-                                        <i className="fa-solid fa-ticket" />
+                                        <FaTicket />
                                     </div>
                                     <div>
                                         <h3 className="font-semibold text-lg">Easy Ticket Booking</h3>
@@ -59,7 +60,7 @@ export default function Auth() {
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400">
-                                        <i className="fa-solid fa-music" />
+                                        <FaMusic />
                                     </div>
                                     <div>
                                         <h3 className="font-semibold text-lg">Premium Events</h3>
@@ -70,7 +71,7 @@ export default function Auth() {
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <div className="w-12 h-12 rounded-xl bg-pink-500/20 flex items-center justify-center text-pink-400">
-                                        <i className="fa-solid fa-users" />
+                                        <FaUsers />
                                     </div>
                                     <div>
                                         <h3 className="font-semibold text-lg">Community Access</h3>
@@ -119,7 +120,7 @@ function Login() {
             let user = await loginUser(data);
             if (user) {
                 localStorage.setItem("token", user.data.accessToken);
-                setData({ auth: true, user });
+                setData({ auth: true, user: user.data });
                 navigate(-1)
                 reset();
             }
@@ -233,11 +234,11 @@ function Login() {
                 {/* Social Login */}
                 <div className="grid grid-cols-2 gap-4">
                     <button className="glass h-14 rounded-2xl hover:border-cyan-400 transition flex items-center justify-center gap-3">
-                        <i className="fa-brands fa-google text-red-400" />
+                        <FaGoogle className="text-red-400" />
                         Google
                     </button>
                     <button className="glass h-14 rounded-2xl hover:border-blue-400 transition flex items-center justify-center gap-3">
-                        <i className="fa-brands fa-facebook-f text-blue-400" />
+                        <FaFacebookF className="text-blue-400" />
                         Facebook
                     </button>
                 </div>
@@ -379,11 +380,11 @@ function Register() {
                 {/* Social Login */}
                 <div className="grid grid-cols-2 gap-4">
                     <button className="glass h-14 rounded-2xl hover:border-cyan-400 transition flex items-center justify-center gap-3">
-                        <i className="fa-brands fa-google text-red-400" />
+                        <FaGoogle className="text-red-400" />
                         Google
                     </button>
                     <button className="glass h-14 rounded-2xl hover:border-blue-400 transition flex items-center justify-center gap-3">
-                        <i className="fa-brands fa-facebook-f text-blue-400" />
+                        <FaFacebookF className="text-blue-400" />
                         Facebook
                     </button>
                 </div>

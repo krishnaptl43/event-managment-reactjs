@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import { FaAngleDown, FaCalendar, FaCalendarCheck, FaClock, FaEnvelope, FaMagnifyingGlass, FaPlay, FaSliders, FaUsers } from 'react-icons/fa6'
 import { axiosClient } from '../services/apiClient';
 import { Urls } from '../services/urls';
 import { toast } from 'react-toastify';
@@ -53,7 +54,7 @@ export default function Events() {
                         <div className="grid lg:grid-cols-5 gap-4">
                             {/* Search */}
                             <div className="lg:col-span-2 glass rounded-2xl px-5 h-14 flex items-center">
-                                <i className="fa-solid fa-magnifying-glass text-cyan-400" />
+                                <FaMagnifyingGlass className="text-cyan-400" />
                                 <input
                                     type="text"
                                     placeholder="Search events, artists, locations..."
@@ -63,12 +64,12 @@ export default function Events() {
                             {/* Category */}
                             <div className="glass rounded-2xl px-5 h-14 flex items-center justify-between">
                                 <span className="text-gray-400">Category</span>
-                                <i className="fa-solid fa-angle-down text-cyan-400" />
+                                <FaAngleDown className="text-cyan-400" />
                             </div>
                             {/* Event Type */}
                             <div className="glass rounded-2xl px-5 h-14 flex items-center justify-between">
                                 <span className="text-gray-400">Event Type</span>
-                                <i className="fa-solid fa-angle-down text-cyan-400" />
+                                <FaAngleDown className="text-cyan-400" />
                             </div>
                             {/* Button */}
                             <button className="h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-400 transition font-bold text-lg shadow-lg shadow-cyan-500/20">
@@ -84,7 +85,7 @@ export default function Events() {
                     <div className="glass rounded-3xl p-6">
                         <div className="flex items-center justify-between mb-5">
                             <div className="w-14 h-14 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl">
-                                <i className="fa-solid fa-calendar-check" />
+                                <FaCalendarCheck />
                             </div>
                             <span className="text-cyan-400 text-sm">+24%</span>
                         </div>
@@ -94,7 +95,7 @@ export default function Events() {
                     <div className="glass rounded-3xl p-6">
                         <div className="flex items-center justify-between mb-5">
                             <div className="w-14 h-14 rounded-2xl bg-green-500/20 text-green-400 flex items-center justify-center text-2xl">
-                                <i className="fa-solid fa-play" />
+                                <FaPlay />
                             </div>
                             <span className="text-green-400 text-sm">Live</span>
                         </div>
@@ -104,7 +105,7 @@ export default function Events() {
                     <div className="glass rounded-3xl p-6">
                         <div className="flex items-center justify-between mb-5">
                             <div className="w-14 h-14 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-2xl">
-                                <i className="fa-solid fa-clock" />
+                                <FaClock />
                             </div>
                             <span className="text-purple-400 text-sm">Upcoming</span>
                         </div>
@@ -114,7 +115,7 @@ export default function Events() {
                     <div className="glass rounded-3xl p-6">
                         <div className="flex items-center justify-between mb-5">
                             <div className="w-14 h-14 rounded-2xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-2xl">
-                                <i className="fa-solid fa-users" />
+                                <FaUsers />
                             </div>
                             <span className="text-pink-400 text-sm">Active</span>
                         </div>
@@ -136,7 +137,7 @@ export default function Events() {
                             </p>
                         </div>
                         <button className="hidden md:flex items-center gap-3 glass px-5 py-3 rounded-2xl hover:border-cyan-400 transition">
-                            <i className="fa-solid fa-sliders text-cyan-400" />
+                            <FaSliders className="text-cyan-400" />
                             Advanced Filters
                         </button>
                     </div>
@@ -194,7 +195,7 @@ export default function Events() {
                                 <div className="p-7">
                                     <div className="flex items-center justify-between mb-5">
                                         <span className="text-gray-400 text-sm">
-                                            <i className="fa-solid fa-calendar mr-2 text-purple-400" />
+                                            <FaCalendar className="mr-2 text-purple-400" />
                                             {item.venue}
                                         </span>
                                         <span className="text-purple-400 text-sm">{item.category}</span>
@@ -237,7 +238,7 @@ export default function Events() {
                         </p>
                         <div className="max-w-2xl mx-auto flex flex-col md:flex-row gap-4">
                             <div className="glass rounded-2xl h-14 px-5 flex items-center flex-1">
-                                <i className="fa-solid fa-envelope text-cyan-400" />
+                                <FaEnvelope className="text-cyan-400" />
                                 <input
                                     type="email"
                                     placeholder="Enter your email address"

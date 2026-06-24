@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaArrowRight, FaBriefcase, FaCalendar, FaCode, FaFilm, FaLocationDot, FaMusic } from 'react-icons/fa6'
 
 export default function Home() {
     return (
@@ -75,14 +76,14 @@ export default function Home() {
                                     <div>
                                         <h3 className="text-2xl font-bold">Music Festival 2026</h3>
                                         <p className="text-gray-300 mt-2 text-sm">
-                                            <i className="fa-solid fa-location-dot text-cyan-400 mr-2"></i>
+                                            <FaLocationDot className="text-cyan-400 mr-2" />
                                             Mumbai, India
                                         </p>
                                     </div>
 
                                     <button
                                         className="min-w-[56px] h-14 rounded-xl bg-cyan-500 hover:bg-cyan-400 transition flex items-center justify-center">
-                                        <i className="fa-solid fa-arrow-right"></i>
+                                        <FaArrowRight />
                                     </button>
 
                                 </div>
@@ -115,7 +116,7 @@ export default function Home() {
                             className="glass rounded-3xl p-8 text-center hover:border-cyan-400 transition duration-300 hover:-translate-y-2">
                             <div
                                 className="w-20 h-20 mx-auto rounded-2xl bg-cyan-500/15 flex items-center justify-center text-cyan-400 text-3xl mb-6">
-                                <i className="fa-solid fa-music"></i>
+                                <FaMusic />
                             </div>
                             <h3 className="text-2xl font-bold mb-3">Music</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">
@@ -127,7 +128,7 @@ export default function Home() {
                             className="glass rounded-3xl p-8 text-center hover:border-purple-400 transition duration-300 hover:-translate-y-2">
                             <div
                                 className="w-20 h-20 mx-auto rounded-2xl bg-purple-500/15 flex items-center justify-center text-purple-400 text-3xl mb-6">
-                                <i className="fa-solid fa-code"></i>
+                                <FaCode />
                             </div>
                             <h3 className="text-2xl font-bold mb-3">Tech</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">
@@ -139,7 +140,7 @@ export default function Home() {
                             className="glass rounded-3xl p-8 text-center hover:border-pink-400 transition duration-300 hover:-translate-y-2">
                             <div
                                 className="w-20 h-20 mx-auto rounded-2xl bg-pink-500/15 flex items-center justify-center text-pink-400 text-3xl mb-6">
-                                <i className="fa-solid fa-briefcase"></i>
+                                <FaBriefcase />
                             </div>
                             <h3 className="text-2xl font-bold mb-3">Business</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">
@@ -151,7 +152,7 @@ export default function Home() {
                             className="glass rounded-3xl p-8 text-center hover:border-yellow-400 transition duration-300 hover:-translate-y-2">
                             <div
                                 className="w-20 h-20 mx-auto rounded-2xl bg-yellow-500/15 flex items-center justify-center text-yellow-400 text-3xl mb-6">
-                                <i className="fa-solid fa-film"></i>
+                                <FaFilm />
                             </div>
                             <h3 className="text-2xl font-bold mb-3">Entertainment</h3>
                             <p className="text-gray-400 text-sm leading-relaxed">
@@ -206,12 +207,12 @@ export default function Home() {
 
                                 <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-5">
                                     <span>
-                                        <i className="fa-solid fa-calendar text-cyan-400 mr-2"></i>
+                                        <FaCalendar className="text-cyan-400 mr-2" />
                                         25 May 2026
                                     </span>
 
                                     <span>
-                                        <i className="fa-solid fa-location-dot text-cyan-400 mr-2"></i>
+                                        <FaLocationDot className="text-cyan-400 mr-2" />
                                         Delhi
                                     </span>
                                 </div>
@@ -252,12 +253,12 @@ export default function Home() {
 
                                 <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-5">
                                     <span>
-                                        <i className="fa-solid fa-calendar text-purple-400 mr-2"></i>
+                                        <FaCalendar className="text-purple-400 mr-2" />
                                         28 May 2026
                                     </span>
 
                                     <span>
-                                        <i className="fa-solid fa-location-dot text-purple-400 mr-2"></i>
+                                        <FaLocationDot className="text-purple-400 mr-2" />
                                         Bangalore
                                     </span>
                                 </div>
@@ -299,12 +300,12 @@ export default function Home() {
 
                                 <div className="flex flex-wrap items-center gap-4 text-gray-400 text-sm mb-5">
                                     <span>
-                                        <i className="fa-solid fa-calendar text-pink-400 mr-2"></i>
+                                        <FaCalendar className="text-pink-400 mr-2" />
                                         30 May 2026
                                     </span>
 
                                     <span>
-                                        <i className="fa-solid fa-location-dot text-pink-400 mr-2"></i>
+                                        <FaLocationDot className="text-pink-400 mr-2" />
                                         Goa
                                     </span>
                                 </div>

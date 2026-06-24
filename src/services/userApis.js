@@ -25,3 +25,23 @@ export async function loginUser(formData) {
         toast.error(error.response.data.message || error.message)
     }
 }
+
+export async function getUserProfile() {
+    try {
+        let { data } = await await axiosClient.get(Urls.profile);
+        return data;
+    } catch (error) {
+        toast.error(error.response.data.message || error.message)
+    }
+}
+
+export async function changePassword(formData) {
+    try {
+        let { data } = await axiosClient.post(Urls.changePass, formData);
+        if (data.status) {
+            return data;
+        }
+    } catch (error) {
+        toast.error(error.response.data.message || error.message)
+    }
+}

@@ -13,29 +13,31 @@ import {
     FaUsers,
     FaCheckCircle,
 } from "react-icons/fa";
+import { useAuthContext } from "../../context/authContext";
 
-const Profile = ({ role = "user" }) => {
-    const isAdmin = role === "admin";
+const Profile = () => {
+    const { data, setData } = useAuthContext();
+    const isAdmin = data?.user?.role === "admin";
 
     return (
         <div className="space-y-8">
             {/* Cover Section */}
 
             <div className="relative overflow-hidden rounded-3xl border border-white/10">
-                <div className="h-56 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600" />
+                <div className="h-56 bg-linear-to-r from-cyan-500 via-blue-500 to-purple-600" />
 
                 <div className="absolute inset-0 bg-black/20" />
 
-                <div className="absolute -bottom-16 left-8 flex items-end gap-6">
+                <div className="absolute bottom-0 mb-2 left-8 flex items-end gap-6">
                     <img
-                        src="https://i.pravatar.cc/300"
+                        src={data?.user?.image ?? "https://i.pravatar.cc/150?img=32"}
                         alt="Profile"
                         className="w-32 h-32 rounded-3xl border-4 border-slate-950 object-cover"
                     />
 
                     <div className="pb-5">
                         <h1 className="text-3xl font-black text-white">
-                            Rahul Sharma
+                            {data?.user?.name ?? "Account"}
                         </h1>
 
                         <p className="text-slate-200">
@@ -46,9 +48,6 @@ const Profile = ({ role = "user" }) => {
                     </div>
                 </div>
             </div>
-
-            <div className="h-16" />
-
             {/* Top Actions */}
 
             <div className="flex justify-end">
@@ -81,7 +80,7 @@ const Profile = ({ role = "user" }) => {
                     </p>
                 </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                {/* <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
                     <FaUsers className="text-purple-400 text-3xl mb-4" />
                     <h3 className="text-3xl font-black">
                         {isAdmin ? "2.5K" : "125"}
@@ -89,9 +88,9 @@ const Profile = ({ role = "user" }) => {
                     <p className="text-slate-400">
                         {isAdmin ? "Attendees" : "Connections"}
                     </p>
-                </div>
+                </div> */}
 
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
+                {/* <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
                     <FaCheckCircle className="text-yellow-400 text-3xl mb-4" />
                     <h3 className="text-3xl font-black">
                         {isAdmin ? "96%" : "100%"}
@@ -99,7 +98,7 @@ const Profile = ({ role = "user" }) => {
                     <p className="text-slate-400">
                         {isAdmin ? "Success Rate" : "Attendance"}
                     </p>
-                </div>
+                </div> */}
             </div>
 
             {/* Profile Details */}
@@ -108,21 +107,8 @@ const Profile = ({ role = "user" }) => {
                 {/* Left */}
 
                 <div className="space-y-6">
-                    {/* About */}
-
-                    <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-                        <h2 className="text-xl font-bold mb-4">
-                            About
-                        </h2>
-
-                        <p className="text-slate-400 leading-relaxed">
-                            Passionate about creating memorable experiences through
-                            professional event management and networking opportunities.
-                        </p>
-                    </div>
 
                     {/* Contact */}
-
                     <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
                         <h2 className="text-xl font-bold mb-5">
                             Contact Information
@@ -131,43 +117,23 @@ const Profile = ({ role = "user" }) => {
                         <div className="space-y-4">
                             <div className="flex gap-3 items-center">
                                 <FaEnvelope className="text-cyan-400" />
-                                <span>rahul@example.com</span>
+                                <span>{data?.user?.email}</span>
                             </div>
 
                             <div className="flex gap-3 items-center">
                                 <FaPhone className="text-green-400" />
-                                <span>+91 9876543210</span>
+                                <span>+91 {data?.user?.phone}</span>
                             </div>
 
                             <div className="flex gap-3 items-center">
                                 <FaMapMarkerAlt className="text-red-400" />
-                                <span>Indore, India</span>
+                                <span>{data?.user?.address}</span>
                             </div>
 
                             <div className="flex gap-3 items-center">
                                 <FaGlobe className="text-purple-400" />
                                 <span>www.eventhub.com</span>
                             </div>
-                        </div>
-                    </div>
-
-                    {/* Social Links */}
-
-                    <div className="bg-white/5 border border-white/10 rounded-3xl p-6">
-                        <h2 className="text-xl font-bold mb-5">
-                            Social Profiles
-                        </h2>
-
-                        <div className="space-y-3">
-                            <button className="w-full bg-slate-900 rounded-xl p-4 flex items-center gap-3">
-                                <FaLinkedin />
-                                LinkedIn
-                            </button>
-
-                            <button className="w-full bg-slate-900 rounded-xl p-4 flex items-center gap-3">
-                                <FaTwitter />
-                                Twitter / X
-                            </button>
                         </div>
                     </div>
                 </div>

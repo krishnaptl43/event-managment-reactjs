@@ -1,4 +1,5 @@
 import React from 'react'
+import { FaEnvelope, FaFacebookF, FaInstagram, FaLinkedinIn, FaLocationDot, FaPhone, FaPlus, FaTag, FaTwitter, FaUser } from 'react-icons/fa6'
 
 export default function Contact() {
     return (
@@ -32,7 +33,7 @@ export default function Contact() {
                         <div className="glass rounded-3xl p-8">
                             <div className="flex items-start gap-5">
                                 <div className="w-16 h-16 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-2xl">
-                                    <i className="fa-solid fa-location-dot" />
+                                    <FaLocationDot />
                                 </div>
                                 <div>
                                     <h3 className="text-2xl font-bold mb-3">Office Address</h3>
@@ -47,7 +48,7 @@ export default function Contact() {
                         <div className="glass rounded-3xl p-8">
                             <div className="flex items-start gap-5">
                                 <div className="w-16 h-16 rounded-2xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-2xl">
-                                    <i className="fa-solid fa-envelope" />
+                                    <FaEnvelope />
                                 </div>
                                 <div>
                                     <h3 className="text-2xl font-bold mb-3">Email Support</h3>
@@ -63,7 +64,7 @@ export default function Contact() {
                         <div className="glass rounded-3xl p-8">
                             <div className="flex items-start gap-5">
                                 <div className="w-16 h-16 rounded-2xl bg-pink-500/20 text-pink-400 flex items-center justify-center text-2xl">
-                                    <i className="fa-solid fa-phone" />
+                                    <FaPhone />
                                 </div>
                                 <div>
                                     <h3 className="text-2xl font-bold mb-3">Call Us</h3>
@@ -83,25 +84,25 @@ export default function Contact() {
                                     href="#"
                                     className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-cyan-500 transition"
                                 >
-                                    <i className="fa-brands fa-facebook-f" />
+                                    <FaFacebookF />
                                 </a>
                                 <a
                                     href="#"
                                     className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-pink-500 transition"
                                 >
-                                    <i className="fa-brands fa-instagram" />
+                                    <FaInstagram />
                                 </a>
                                 <a
                                     href="#"
                                     className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-sky-500 transition"
                                 >
-                                    <i className="fa-brands fa-twitter" />
+                                    <FaTwitter />
                                 </a>
                                 <a
                                     href="#"
                                     className="w-14 h-14 rounded-2xl glass flex items-center justify-center hover:bg-purple-500 transition"
                                 >
-                                    <i className="fa-brands fa-linkedin-in" />
+                                    <FaLinkedinIn />
                                 </a>
                             </div>
                         </div>
@@ -126,7 +127,7 @@ export default function Contact() {
                                         Full Name
                                     </label>
                                     <div className="glass rounded-2xl h-14 px-5 flex items-center">
-                                        <i className="fa-solid fa-user text-cyan-400" />
+                                        <FaUser className="text-cyan-400" />
                                         <input
                                             type="text"
                                             placeholder="Enter your full name"
@@ -140,7 +141,7 @@ export default function Contact() {
                                         Email Address
                                     </label>
                                     <div className="glass rounded-2xl h-14 px-5 flex items-center">
-                                        <i className="fa-solid fa-envelope text-cyan-400" />
+                                        <FaEnvelope className="text-cyan-400" />
                                         <input
                                             type="email"
                                             placeholder="Enter your email"
@@ -154,7 +155,7 @@ export default function Contact() {
                                         Subject
                                     </label>
                                     <div className="glass rounded-2xl h-14 px-5 flex items-center">
-                                        <i className="fa-solid fa-tag text-cyan-400" />
+                                        <FaTag className="text-cyan-400" />
                                         <input
                                             type="text"
                                             placeholder="Enter subject"
@@ -209,7 +210,7 @@ export default function Contact() {
                                     Now” button.
                                 </p>
                             </div>
-                            <i className="fa-solid fa-plus text-cyan-400 mt-2" />
+                            <FaPlus className="text-cyan-400 mt-2" />
                         </div>
                         {/* FAQ */}
                         <div className="glass rounded-3xl p-6 flex items-start justify-between gap-5">
@@ -222,7 +223,7 @@ export default function Contact() {
                                     events.
                                 </p>
                             </div>
-                            <i className="fa-solid fa-plus text-purple-400 mt-2" />
+                            <FaPlus className="text-purple-400 mt-2" />
                         </div>
                         {/* FAQ */}
                         <div className="glass rounded-3xl p-6 flex items-start justify-between gap-5">
@@ -234,7 +235,7 @@ export default function Contact() {
                                     You can use the contact form or email our support team directly.
                                 </p>
                             </div>
-                            <i className="fa-solid fa-plus text-pink-400 mt-2" />
+                            <FaPlus className="text-pink-400 mt-2" />
                         </div>
                     </div>
                 </div>
@@ -254,7 +255,7 @@ export default function Contact() {
                         </p>
                         <div className="max-w-2xl mx-auto flex flex-col md:flex-row gap-4">
                             <div className="glass rounded-2xl h-14 px-5 flex items-center flex-1">
-                                <i className="fa-solid fa-envelope text-cyan-400" />
+                                <FaEnvelope className="text-cyan-400" />
                                 <input
                                     type="email"
                                     placeholder="Enter your email"
