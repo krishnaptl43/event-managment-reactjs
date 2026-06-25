@@ -4,7 +4,8 @@ export const Urls = {
     events: "/events",
     booking: "/bookings",
     profile: "/users/profile",
-    changePass: "/users/change-password"
+    changePass: "/users/change-password",
+    uploadImage : "/users/upload-image"
 }
 
 export const Roles = {

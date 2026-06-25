@@ -10,6 +10,7 @@ import {
     FaSignOutAlt,
     FaTimes,
     FaBars,
+    FaHome
 } from "react-icons/fa";
 import { FaChevronDown, FaGaugeHigh, FaRightFromBracket } from 'react-icons/fa6'
 import { Link, NavLink, useNavigate } from "react-router";
@@ -56,13 +57,13 @@ const Dashboard = ({ children }) => {
     };
 
     const menuItems = [
+        { name: "Home", icon: <FaHome />, link: "/" },
         { name: "Dashboard", icon: <FaChartLine />, link: "/user/dashboard" },
         { name: "My Tickets", icon: <FaTicketAlt />, link: "/user/my-tickets" },
         { name: "Events", icon: <FaHeart />, link: "/events" },
         { name: "Notifications", icon: <FaBell />, link: "/user/notifications" },
         { name: "Profile", icon: <FaUser />, link: "/user/profile" },
         { name: "Change Password", icon: <FaLock />, link: "/user/change-password" },
-        // { name: "Settings", icon: <FaCog />, link: "/user/settings" },
     ];
 
     return (
@@ -77,7 +78,7 @@ const Dashboard = ({ children }) => {
                 />
             )}
 
-            <aside className={`fixed lg:static max-h-screen top-0 left-0 overflow-hidden  w-72 bg-slate-900 border-r border-white/10 z-50 transform transition-all duration-300 ease-in-out
+            <aside className={`fixed lg:static min-h-screen top-0 left-0 overflow-hidden  w-72 bg-slate-900 border-r border-white/10 z-50 transform transition-all duration-300 ease-in-out
                               ${sidebarOpen
                     ? "translate-x-0"
                     : "-translate-x-full lg:translate-x-0"}`}

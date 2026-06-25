@@ -45,3 +45,31 @@ export async function changePassword(formData) {
         toast.error(error.response.data.message || error.message)
     }
 }
+
+export async function uploadUserProfile(formData) {
+    try {
+        let { data } = await axiosClient.post(Urls.uploadImage, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+        if (data.status) {
+            toast.success(data.message);
+            return data;
+        }
+    } catch (error) {
+        toast.error(error.response.data.message || error.message)
+    }
+}
+
+export async function updateUserInfo(formData) {
+    try {
+        let { data } = await axiosClient.patch(Urls.users, formData);
+        if (data.status) {
+            toast.success(data.message)
+            return data.data;
+        }
+    } catch (error) {
+        toast.error(error.response.data.message || error.message)
+    }
+}
