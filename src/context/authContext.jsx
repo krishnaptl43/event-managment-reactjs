@@ -10,7 +10,7 @@ const AuthContext = createContext();
 export default function ContextProvider({ children }) {
     const { isAuthenticated } = useAuth();
     const [data, setData] = useState({
-        auth: isAuthenticated,
+        auth: false,
         user: {},
     });
 
@@ -23,12 +23,13 @@ export default function ContextProvider({ children }) {
             });
             return;
         };
+
         let profile = await getUserProfile();
         if (profile.status) {
             setData({
                 auth: true,
                 user: profile.data,
-            })
+            });
         } else {
             setData({
                 auth: false,

@@ -4,6 +4,8 @@ import { FaAngleDown, FaCalendar, FaCalendarCheck, FaClock, FaEnvelope, FaMagnif
 import { axiosClient } from '../services/apiClient';
 import { Urls } from '../services/urls';
 import { toast } from 'react-toastify';
+import { getAllEvents } from '../services/eventApis';
+import { FaMapMarkerAlt } from 'react-icons/fa';
 
 export default function Events() {
 
@@ -11,7 +13,7 @@ export default function Events() {
 
     const fetchEvents = useCallback(async () => {
         try {
-            let { data } = await axiosClient.get(Urls.events);
+            let data = await getAllEvents()
             if (data.status) {
                 setEvents(data.data)
             } else {
@@ -20,19 +22,17 @@ export default function Events() {
         } catch (error) {
             console.log(error);
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         fetchEvents()
     }, [fetchEvents]);
 
-    console.log(events);
-
 
     return (
         <>
             {/* ================= HERO ================= */}
-            <section className="relative pt-36 pb-20 overflow-hidden">
+            <section className="relative pt-36 pb-10 overflow-hidden">
                 <div className="hero-glow glow-left" />
                 <div className="hero-glow glow-right" />
                 <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -50,10 +50,10 @@ export default function Events() {
                         </p>
                     </div>
                     {/* Search Box */}
-                    <div className="max-w-6xl mx-auto mt-14 glass rounded-4xl p-5">
-                        <div className="grid lg:grid-cols-5 gap-4">
+                    <div className="max-w-6xl mx-auto mt-10 glass rounded-4xl p-5">
+                        <div className="grid lg:grid-cols-4 gap-4">
                             {/* Search */}
-                            <div className="lg:col-span-2 glass rounded-2xl px-5 h-14 flex items-center">
+                            <div className="lg:col-span-2 glass rounded-2xl px-5 h-8 flex items-center">
                                 <FaMagnifyingGlass className="text-cyan-400" />
                                 <input
                                     type="text"
@@ -62,17 +62,12 @@ export default function Events() {
                                 />
                             </div>
                             {/* Category */}
-                            <div className="glass rounded-2xl px-5 h-14 flex items-center justify-between">
+                            <div className="glass rounded-2xl px-5 h-8 flex items-center justify-between">
                                 <span className="text-gray-400">Category</span>
                                 <FaAngleDown className="text-cyan-400" />
                             </div>
-                            {/* Event Type */}
-                            <div className="glass rounded-2xl px-5 h-14 flex items-center justify-between">
-                                <span className="text-gray-400">Event Type</span>
-                                <FaAngleDown className="text-cyan-400" />
-                            </div>
                             {/* Button */}
-                            <button className="h-14 rounded-2xl bg-cyan-500 hover:bg-cyan-400 transition font-bold text-lg shadow-lg shadow-cyan-500/20">
+                            <button className="h-8 rounded-2xl bg-cyan-500 hover:bg-cyan-400 transition font-bold text-sm shadow-lg shadow-cyan-500/20">
                                 Search
                             </button>
                         </div>
@@ -168,7 +163,7 @@ export default function Events() {
                 </div>
             </section>
             {/* ================= UPCOMING EVENTS ================= */}
-            <section className="pb-24 px-6">
+            <section className="pb-20 px-6">
                 <div className="max-w-7xl mx-auto">
                     <div className="flex items-center justify-between mb-10">
                         <h2 className="text-3xl md:text-4xl font-black">
@@ -195,7 +190,7 @@ export default function Events() {
                                 <div className="p-7">
                                     <div className="flex items-center justify-between mb-5">
                                         <span className="text-gray-400 text-sm">
-                                            <FaCalendar className="mr-2 text-purple-400" />
+                                            <FaMapMarkerAlt className="inline mr-2 text-cyan-400" />
                                             {item.venue}
                                         </span>
                                         <span className="text-purple-400 text-sm">{item.category}</span>
@@ -213,42 +208,13 @@ export default function Events() {
                                             <p className="text-gray-500 text-xs">Premium Ticket Price</p>
                                             <h4 className="text-2xl font-black text-purple-400">₹{item.premium_tickets_price}</h4>
                                         </div>
-                                        <Link to="/events/details" className="bg-purple-500 hover:bg-purple-400 transition px-5 py-3 rounded-xl font-semibold">
+                                        <Link to={`/events/${item._id}`} className="bg-purple-500 hover:bg-purple-400 transition px-5 py-3 rounded-xl font-semibold">
                                             More Details
                                         </Link>
                                     </div>
                                 </div>
                             </div>
                         ))}
-                    </div>
-                </div>
-            </section>
-            {/* ================= NEWSLETTER ================= */}
-            <section className="pb-24 px-6">
-                <div className="max-w-5xl mx-auto glass rounded-[40px] p-10 md:p-16 text-center relative overflow-hidden">
-                    <div className="hero-glow glow-left opacity-50" />
-                    <div className="relative z-10">
-                        <h2 className="text-4xl md:text-5xl font-black mb-6">
-                            Never Miss
-                            <span className="gradient-text">An Event</span>
-                        </h2>
-                        <p className="text-gray-400 text-lg max-w-2xl mx-auto mb-10">
-                            Subscribe to get updates about upcoming concerts, conferences,
-                            workshops, and premium experiences.
-                        </p>
-                        <div className="max-w-2xl mx-auto flex flex-col md:flex-row gap-4">
-                            <div className="glass rounded-2xl h-14 px-5 flex items-center flex-1">
-                                <FaEnvelope className="text-cyan-400" />
-                                <input
-                                    type="email"
-                                    placeholder="Enter your email address"
-                                    className="bg-transparent outline-none w-full px-4 text-white placeholder-gray-500"
-                                />
-                            </div>
-                            <button className="bg-cyan-500 hover:bg-cyan-400 transition px-8 h-14 rounded-2xl font-bold shadow-lg shadow-cyan-500/20">
-                                Subscribe
-                            </button>
-                        </div>
                     </div>
                 </div>
             </section>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
     FaCalendarAlt,
     FaMapMarkerAlt,
@@ -12,17 +12,66 @@ import {
     FaMusic,
     FaArrowLeft,
 } from "react-icons/fa";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { getEventById } from "../services/eventApis";
+import { toast } from "react-toastify";
+import { bookTicket } from "../services/bookingApis";
+import { useAuthContext } from "../context/authContext";
 
 export default function EventDetailsPage() {
     const navigate = useNavigate();
+    const { data } = useAuthContext();
+    const { eventId } = useParams();
+    const [event, setEvent] = useState(null);
+    const [ticketType, setTicketType] = useState({ ticket_type: "general", booked_tickets: 1, event: eventId })
+
+    const fetchEvent = useCallback(async () => {
+        try {
+            let data = await getEventById(eventId);
+            if (data.status) {
+                setEvent(data.data);
+            } else {
+                navigate("/events")
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    }, [eventId]);
+
+    useEffect(() => {
+        fetchEvent()
+    }, [fetchEvent]);
+
+    const ticketBooking = useCallback(async () => {
+
+        if (!data.auth) {
+            toast.warning("You Must login First");
+            navigate("/auth");
+            return;
+        }
+
+        try {
+            let booking = await bookTicket(ticketType);
+            if (booking.status) {
+                toast.success(booking.message);
+                setTicketType({ ticket_type: "general", booked_tickets: 1, event: eventId });
+                navigate("/user/my-tickets")
+            } else {
+                toast.error(booking.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }, [eventId, ticketType])
+
+
     return (
         <div className="relative pt-20 pb-1 overflow-hidden">
             <div className="min-h-screen bg-slate-950 text-white">
                 {/* ================= HEADER ================= */}
                 <header className="backdrop-blur-xl bg-slate-950/80 border-b border-white/10">
                     <div className="max-w-7xl mx-auto px-6 py-1 flex items-center justify-between">
-                        <button onClick={()=>navigate(-1)} className="flex items-center gap-3 text-slate-300 hover:text-cyan-400 transition">
+                        <button onClick={() => navigate(-1)} className="flex items-center gap-3 text-slate-300 hover:text-cyan-400 transition">
                             <FaArrowLeft />
                             <span>Back to Events</span>
                         </button>
@@ -42,8 +91,8 @@ export default function EventDetailsPage() {
                 <section className="relative">
                     <div className="h-137.5 overflow-hidden">
                         <img
-                            src="https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=2000&auto=format&fit=crop"
-                            alt="event"
+                            src={event?.thumbnail}
+                            alt={event?.title}
                             className="w-full h-full object-cover"
                         />
                     </div>
@@ -58,23 +107,23 @@ export default function EventDetailsPage() {
                             </div>
 
                             <h1 className="text-5xl md:text-7xl font-black mb-6">
-                                Summer Music Festival 2026
+                                {event?.title}
                             </h1>
 
                             <div className="flex flex-wrap gap-6 text-slate-200">
                                 <div className="flex items-center gap-3">
                                     <FaCalendarAlt className="text-cyan-400" />
-                                    <span>28 June 2026</span>
+                                    <span>{event?.date}</span>
                                 </div>
 
                                 <div className="flex items-center gap-3">
                                     <FaClock className="text-cyan-400" />
-                                    <span>04:00 PM - 11:00 PM</span>
+                                    <span>{event?.time}</span>
                                 </div>
 
                                 <div className="flex items-center gap-3">
                                     <FaMapMarkerAlt className="text-cyan-400" />
-                                    <span>Goa Beach Arena, Goa</span>
+                                    <span>{event?.venue}</span>
                                 </div>
                             </div>
                         </div>
@@ -96,17 +145,9 @@ export default function EventDetailsPage() {
                                 </h2>
 
                                 <p className="text-slate-400 leading-relaxed text-lg">
-                                    Join thousands of music lovers at the biggest summer music
-                                    festival of the year. Experience live performances from top
-                                    international artists, DJs, and bands while enjoying an
-                                    unforgettable atmosphere by the beach.
+                                    {event?.desc}
                                 </p>
 
-                                <p className="text-slate-400 leading-relaxed text-lg mt-5">
-                                    The festival includes food zones, VIP lounges, interactive
-                                    entertainment areas, merchandise stores, and exclusive artist
-                                    meet-and-greet opportunities.
-                                </p>
                             </div>
 
                             {/* Highlights */}
@@ -117,14 +158,7 @@ export default function EventDetailsPage() {
                                 </h2>
 
                                 <div className="grid md:grid-cols-2 gap-5">
-                                    {[
-                                        "Live International Artists",
-                                        "Beach Side Experience",
-                                        "Food & Beverage Zones",
-                                        "VIP Lounge Access",
-                                        "Meet & Greet Sessions",
-                                        "Free Merchandise"
-                                    ].map((item, index) => (
+                                    {event?.highlights?.map((item, index) => (
                                         <div
                                             key={index}
                                             className="flex items-center gap-4"
@@ -140,7 +174,7 @@ export default function EventDetailsPage() {
 
                             {/* Event Schedule */}
 
-                            <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+                            {/* <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
                                 <h2 className="text-3xl font-bold mb-8">
                                     Event Schedule
                                 </h2>
@@ -182,7 +216,7 @@ export default function EventDetailsPage() {
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </div> */}
 
                             {/* Gallery */}
 
@@ -192,11 +226,11 @@ export default function EventDetailsPage() {
                                 </h2>
 
                                 <div className="grid md:grid-cols-3 gap-4">
-                                    {[1, 2, 3, 4, 5, 6].map((item) => (
+                                    {event?.images?.map((item) => (
                                         <img
                                             key={item}
-                                            src={`https://picsum.photos/400/300?random=${item}`}
-                                            alt=""
+                                            src={item}
+                                            alt={item}
                                             className="rounded-2xl h-44 w-full object-cover hover:scale-105 transition duration-300"
                                         />
                                     ))}
@@ -222,17 +256,6 @@ export default function EventDetailsPage() {
                                     </div>
 
                                     <div className="p-6">
-                                        {/* Price */}
-
-                                        <div className="mb-8">
-                                            <p className="text-slate-400 text-sm">
-                                                Starting From
-                                            </p>
-
-                                            <h2 className="text-5xl font-black text-cyan-400">
-                                                ₹1,999
-                                            </h2>
-                                        </div>
 
                                         {/* Stats */}
 
@@ -244,7 +267,7 @@ export default function EventDetailsPage() {
                                                 </span>
 
                                                 <span className="font-semibold">
-                                                    2,500+
+                                                    {parseInt(event?.total_general_tickets) + parseInt(event?.total_premium_tickets)}+
                                                 </span>
                                             </div>
 
@@ -255,7 +278,7 @@ export default function EventDetailsPage() {
                                                 </span>
 
                                                 <span className="font-semibold text-green-400">
-                                                    158
+                                                    {Number(event?.total_general_tickets) + Number(event?.total_premium_tickets)}
                                                 </span>
                                             </div>
 
@@ -266,7 +289,7 @@ export default function EventDetailsPage() {
                                                 </span>
 
                                                 <span className="font-semibold">
-                                                    Music Festival
+                                                    {event?.category}
                                                 </span>
                                             </div>
                                         </div>
@@ -278,7 +301,7 @@ export default function EventDetailsPage() {
                                                 Ticket Types
                                             </h4>
 
-                                            <div className="border border-cyan-500 bg-cyan-500/10 rounded-2xl p-4">
+                                            <div onClick={() => setTicketType(prev => ({ ...prev, ticket_type: "general" }))} className={`${ticketType.ticket_type === "general" ? "border-cyan-500 bg-cyan-500/10" : " border-white/10"} border cursor-pointer rounded-2xl p-4`}>
                                                 <div className="flex justify-between">
                                                     <div>
                                                         <h5 className="font-bold">
@@ -291,12 +314,12 @@ export default function EventDetailsPage() {
                                                     </div>
 
                                                     <span className="font-bold text-cyan-400">
-                                                        ₹1,999
+                                                        ₹{event?.general_tickets_price}
                                                     </span>
                                                 </div>
                                             </div>
 
-                                            <div className="border border-white/10 rounded-2xl p-4">
+                                            <div onClick={() => setTicketType(prev => ({ ...prev, ticket_type: "premium" }))} className={`${ticketType.ticket_type === "premium" ? "border-cyan-500 bg-cyan-500/10" : "border-white/10"} border cursor-pointer rounded-2xl p-4`}>
                                                 <div className="flex justify-between">
                                                     <div>
                                                         <h5 className="font-bold">
@@ -309,7 +332,7 @@ export default function EventDetailsPage() {
                                                     </div>
 
                                                     <span className="font-bold">
-                                                        ₹4,999
+                                                        ₹{event?.premium_tickets_price}
                                                     </span>
                                                 </div>
                                             </div>
@@ -322,17 +345,17 @@ export default function EventDetailsPage() {
                                                 Quantity
                                             </label>
 
-                                            <select className="w-full bg-slate-900 border border-white/10 rounded-xl p-4 outline-none">
-                                                <option>1 Ticket</option>
-                                                <option>2 Tickets</option>
-                                                <option>3 Tickets</option>
-                                                <option>4 Tickets</option>
+                                            <select onChange={(e) => setTicketType(prev => ({ ...prev, booked_tickets: e.target.value }))} className="w-full bg-slate-900 border border-white/10 rounded-xl p-4 outline-none">
+                                                <option value={1}>1 Ticket</option>
+                                                <option value={2}>2 Tickets</option>
+                                                <option value={3}>3 Tickets</option>
+                                                <option value={4}>4 Tickets</option>
                                             </select>
                                         </div>
 
                                         {/* CTA */}
 
-                                        <button className="w-full bg-cyan-500 hover:bg-cyan-400 transition py-4 rounded-2xl text-lg font-bold shadow-lg shadow-cyan-500/30">
+                                        <button onClick={ticketBooking} className="w-full bg-cyan-500 cursor-pointer hover:bg-cyan-400 transition py-4 rounded-2xl text-lg font-bold shadow-lg shadow-cyan-500/30">
                                             Book Tickets Now
                                         </button>
 
@@ -362,7 +385,7 @@ export default function EventDetailsPage() {
 
                                         <div>
                                             <h4 className="font-semibold">
-                                                EventHub Entertainment
+                                                {event?.organizer}
                                             </h4>
 
                                             <p className="text-slate-400 text-sm">

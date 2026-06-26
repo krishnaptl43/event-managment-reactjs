@@ -10,7 +10,8 @@ export async function addUser(formData) {
             return data;
         }
     } catch (error) {
-        toast.error(error.response.data.message || error.message)
+        toast.error(error.response.data.message || error.message);
+        return error.response.data
     }
 }
 
@@ -22,16 +23,18 @@ export async function loginUser(formData) {
             return data;
         }
     } catch (error) {
-        toast.error(error.response.data.message || error.message)
+        toast.error(error.response.data.message || error.message);
+        return error.response.data
     }
 }
 
 export async function getUserProfile() {
     try {
-        let { data } = await await axiosClient.get(Urls.profile);
+        let { data } = await axiosClient.get(Urls.profile);
         return data;
     } catch (error) {
-        toast.error(error.response.data.message || error.message)
+        localStorage.removeItem("token");
+        return error.response.data
     }
 }
 
@@ -43,6 +46,7 @@ export async function changePassword(formData) {
         }
     } catch (error) {
         toast.error(error.response.data.message || error.message)
+        return error.response.data
     }
 }
 
@@ -58,7 +62,8 @@ export async function uploadUserProfile(formData) {
             return data;
         }
     } catch (error) {
-        toast.error(error.response.data.message || error.message)
+        toast.error(error.response.data.message || error.message);
+        return error.response.data
     }
 }
 
@@ -70,6 +75,7 @@ export async function updateUserInfo(formData) {
             return data.data;
         }
     } catch (error) {
-        toast.error(error.response.data.message || error.message)
+        toast.error(error.response.data.message || error.message);
+        return error.response.data
     }
 }

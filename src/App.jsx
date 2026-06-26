@@ -29,7 +29,7 @@ export default function App() {
             <Route index element={<Home />} />
             <Route path='events' element={<Outlet />} >
               <Route index element={<Events />} />
-              <Route path='details' element={<EventDetailsPage />} />
+              <Route path=':eventId' element={<EventDetailsPage />} />
             </Route>
             <Route path='photo-gallery' element={<GalleryPage />} />
             <Route path='contact' element={<Contact />} />
