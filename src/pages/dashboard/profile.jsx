@@ -244,35 +244,6 @@ const Profile = () => {
 
                     {/* Activity Timeline */}
 
-                    <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-                        <h2 className="text-2xl font-bold mb-6">
-                            Recent Activity
-                        </h2>
-
-                        <div className="space-y-5">
-                            {[
-                                "Created Summer Music Festival Event",
-                                "Updated Profile Information",
-                                "Booked 2 VIP Tickets",
-                                "Downloaded Event Ticket",
-                                "Completed Event Check-In",
-                            ].map((activity, index) => (
-                                <div
-                                    key={index}
-                                    className="flex gap-4 items-start"
-                                >
-                                    <div className="w-3 h-3 rounded-full bg-cyan-400 mt-2" />
-
-                                    <div>
-                                        <p>{activity}</p>
-                                        <span className="text-sm text-slate-500">
-                                            2 hours ago
-                                        </span>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
